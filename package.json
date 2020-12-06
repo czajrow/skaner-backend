@@ -1,0 +1,11 @@
+{
+  "name": "skaner-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Adam Czajka",
+  "license": "MIT",
+  "dependencies": {
+    "tslint": "^6.1.3",
+    "typescript": "^4.1.2"
+  }
+}
