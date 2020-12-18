@@ -1,12 +1,15 @@
 import express = require("express");
-import { PROBE, ICoordinates } from "./classes/probe";
+import { PROBE } from "./classes/probe";
 
 const app = express();
+
+app.use((req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*')
+});
 
 app.get('/', (req, res) => {
     // body: none
     // response: { value: string } as JSON
-    res.setHeader('Access-Control-Allow-Origin', '*')
     res.status(200);
     res.send({ value: 'Hello, World!' });
 });
@@ -14,7 +17,6 @@ app.get('/', (req, res) => {
 app.get('/api/probe', (req, res) => {
     // body: none
     // response: ICoordinates as JSON
-    res.setHeader('Access-Control-Allow-Origin', '*')
     res.status(200);
     res.send(PROBE.getCoordinates());
 });
@@ -22,10 +24,9 @@ app.get('/api/probe', (req, res) => {
 app.put('/api/probe', (req, res) => {
     // body: ICoordinates as JSON
     // response: success: boolean
-    res.setHeader('Access-Control-Allow-Origin', '*')
     console.log('req.body', req.body);
     res.status(200);
     res.send({ success: true });
 });
-
-app.listen(3000, () => console.log('Example app listening on port 3000!'));
+const port = 3030;
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
