@@ -3,13 +3,13 @@
 exitfn () {
     trap SIGINT
     echo; echo 'Aarghh!!'
-    docker-compose down
+#    docker-compose rm -f
     exit
 }
 
 trap "exitfn" INT            # Set up SIGINT trap to call function.
 
 
-docker-compose build
+docker-compose build --force-rm
 docker-compose up
 

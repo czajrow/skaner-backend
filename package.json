@@ -13,7 +13,6 @@
   "author": "Adam Czajka",
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^2.0.6",
     "typescript": "^4.1.2"
   },
   "dependencies": {
