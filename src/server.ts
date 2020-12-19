@@ -1,17 +1,25 @@
 import express = require("express");
 import { PROBE } from "./classes/probe";
+import { Database } from "./utils/database";
+import { from } from "rxjs";
 
 const app = express();
+const database = new Database();
 
 app.use((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
+    req.next();
 });
 
 app.get('/', (req, res) => {
     // body: none
     // response: { value: string }
     res.status(200);
-    res.send({ value: 'Hello, World!' });
+    const db = database.getDb();
+    from(db.collection('some_collection').insertOne({test: true, message: 'this is test'})).subscribe();
+    from(db.collection('some_collection').find().toArray()).subscribe(response => {
+        res.send({ total: response.length, messages: response.map(a => a.message) });
+    })
 });
 
 app.get('/api/probe', (req, res) => {
@@ -30,4 +38,6 @@ app.put('/api/probe', (req, res) => {
 });
 
 const port = 3000;
-app.listen(port, () => console.log(`App listening on port ${port}!`));
+database.connect().subscribe(() => {
+    app.listen(port, () => console.log(`App listening on port ${port}!`));
+});
